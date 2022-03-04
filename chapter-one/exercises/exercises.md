@@ -161,3 +161,27 @@ In the normal order, it will expand first, and then reduce (try to solve). It wi
 ```
 
 Now, the condition already has a value, in this case `true`, so it will return 0.
+
+# Exercise 1.6
+
+Alyssa re-defines if in terms of cond, like so:
+
+```
+(define (new-if predicate then-clause else-clause)
+    (cond (predicate then-clause)
+          (else else-clause))
+```
+She tests it successfully on some simple cases, and then uses it to re-write the square root program:
+
+(define (sqrt-iter guess x)
+    (new-if (good-enough? guess x)
+            guess
+            (sqrt-iter (improve guess x)
+                       x)))
+
+
+What happens when Alyssa attempts to use this to compute square roots? Explain.
+
+## Answer: 
+This will cause a loop. new-if is a procedure. Procedures are evaluated in applicative order. 
+In other words, it needs to evaluate both alternatives before running, and since it is recursive, it will break, causing a loop. 
